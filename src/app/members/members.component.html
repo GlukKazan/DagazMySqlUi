@@ -1,0 +1,71 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th style="width: 10%">
+          <a href="/map">Games</a>
+        </th>
+        <th style="width: 10%">
+          <a href="/launch">Launch</a>
+        </th>
+        <th style="width: 10%">
+          <a href="/session">Sessions</a>
+        </th>
+        <th style="width: 10%">
+          <b>Tournaments</b>
+        </th>
+        <th style="width: 10%">
+            <a href="/profile">Profile</a>
+        </th>
+        <th style="width: 60%">
+          <a href="/">Log Out</a>
+        </th>
+      </tr>
+    </thead>
+</table>
+
+<h3 *ngIf="tourn"><a (click)="back()">{{tourn.title}}</a></h3>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td>Member</td>
+      <td>Score</td>
+      <td>Rating</td>
+      <td>Win</td>
+      <td>Lose</td>
+      <td>Games</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let it of members">
+      <td>{{it.user}}</td>
+      <td>{{it.score}} ({{it.berger}})</td>
+      <td [ngClass]="{up: it.is_inc == true, down: it.is_inc == false}"><b>{{it.rating | number:'3.2-2':'en-US'}}</b></td>
+      <td>{{it.win}}</td>
+      <td>{{it.lose}}</td>
+      <td>{{it.all}}</td>
+      <td>
+        <input
+        type="button"
+        value="Games"
+        (click)="games(it)"
+        class="btn btn-success"
+        />
+      </td>
+      <td>
+        <div *ngIf="isRoot() || itsMe(it) || itsOwner()">
+          <input
+          type="button"
+          value="Delete"
+          (click)="delete(it)"
+          class="btn btn-danger"
+          />
+        </div>    
+      </td>
+  </tr>
+  </tbody>
+</table>
+
+

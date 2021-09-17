@@ -1,0 +1,71 @@
+<div class="jumbotron">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-6 offset-md-3">
+             <div class="bonus-form">
+                <div class="form-group">
+                     <label>Бонус</label>
+                     <input
+                         class="form-control"
+                         name="bonus"
+                         [(ngModel)]="bonus"
+                         #bon="ngModel"
+                         required
+                         pattern="[0-9A-F]{16}"
+                     />
+                </div>
+                <div *ngIf="done">
+                  <div *ngIf="success && activated">
+                     <p [ngClass]="{correct: once, incorrect:!once}">Бонус активирован</p>
+                     <div *ngIf="activated">
+                        <p [ngClass]="{correct: once, incorrect:!once}">{{ activated | date: 'dd.MM.yyyy HH:mm' }}</p>
+                     </div>    
+                  </div>    
+                  <div *ngIf="!success">
+                     <p [ngClass]="{incorrect: true}">Бонус не найден</p>
+                  </div>    
+                </div>    
+                <div class="form-group">
+                    <button
+                         class="btn btn-primary"
+                         [disabled]="bon.invalid"
+                         (click)="find()"
+                   >Искать</button> 
+                </div>
+                <div class="form-group">
+                  <label>Телефон</label>
+                  <input
+                      class="form-control"
+                      name="phone"
+                      [(ngModel)]="phone"
+                      [disabled]="true"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>EMail</label>
+                  <input
+                      class="form-control"
+                      name="email"
+                      [(ngModel)]="email"
+                      [disabled]="true"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>ID Клиента</label>
+                  <input
+                      class="form-control"
+                      name="info"
+                      [(ngModel)]="info"
+                      pattern="\d+"
+                  />
+                </div>
+                <div *ngIf="id && info" class="form-group">
+                  <button
+                       class="btn btn-primary"
+                       (click)="activate()"
+                 >Активировать</button> 
+              </div>
+          </div>
+        </div>
+     </div>
+ </div>

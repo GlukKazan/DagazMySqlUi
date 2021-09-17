@@ -1,0 +1,113 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th style="width: 10%">
+          <a href="/map">Games</a>
+        </th>
+        <th style="width: 10%">
+          <b>Launch</b>
+        </th>
+        <th style="width: 10%">
+          <a href="/session">Sessions</a>
+        </th>
+        <th style="width: 10%">
+          <a href="/tournament">Tournaments</a>
+        </th>
+        <th style="width: 10%">
+          <a href="/payments">Payments</a>
+        </th>
+        <th style="width: 10%">
+          <a href="/profile">Profile</a>
+        </th>
+        <th style="width: 60%">
+          <a href="/">Log Out</a>
+        </th>
+      </tr>
+    </thead>
+</table>
+  
+<h3>Launch game</h3>
+<table class="table table-striped">
+    <tr>
+        <td>
+          <div class="col-sm-3 d-flex align-items-stretch">
+            <div *ngIf="preview" class="image" style="margin:20px;background-size:contain;min-height:160px;">
+              <div *ngIf="preview.rules">
+                <a target="_blank" [href]="preview.rules">Rules</a>
+              </div>    
+              <img src="api/upload/{{preview.preview}}.png" (click)="submit()"/>
+            </div>    
+          </div>    
+        </td>
+        <td>
+            <div class="jumbotron">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="launch-form">
+                                <div class="form-group">
+                                    <label>Game</label>
+                                    <select class="form-control" name="curr_game" [(ngModel)]="curr_game" (change)="gameChanged()">
+                                        <option *ngFor="let it of games" [value]="it.id">
+                                            {{ it.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div *ngIf="variants.length" class="form-group">
+                                  <label>Variant</label>
+                                  <select class="form-control" name="curr_var" [(ngModel)]="curr_var" (change)="varChanged()">
+                                      <option *ngFor="let it of variants" [value]="it.id">
+                                          {{ it.name }}
+                                      </option>
+                                  </select>
+                                </div>
+                                <div *ngIf="styles.length" class="form-group">
+                                  <label>Styles</label>
+                                  <select class="form-control" name="curr_style" [(ngModel)]="curr_style" (change)="changeStyle()">
+                                      <option *ngFor="let it of styles" [value]="it.id">
+                                          {{ it.name }}
+                                      </option>
+                                  </select>
+                                </div>
+                                <div *ngIf="max_selector" class="form-group">
+                                  <label>Arrangement</label>
+                                  <select class="form-control" name="selector" [(ngModel)]="selector" (change)="loadPreview()">
+                                      <option *ngFor="let it of setups" [value]="it.selector_value">
+                                          {{ it.name }}
+                                      </option>
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                  <label>Player</label>
+                                  <select class="form-control" name="player_num" [(ngModel)]="player_num">
+                                    <option *ngFor="let it of getPlayers()" [value]="it">
+                                        Player {{ it }}
+                                    </option>
+                                  </select>
+                                </div>
+                                <div *ngIf="!ai_selected" class="form-group">
+                                  <label>Time Control</label>
+                                  <select class="form-control" name="timecontrol_id" [(ngModel)]="timecontrol_id">
+                                    <option *ngFor="let x of timecontrol" [value]="x.id">
+                                      {{ x.name }}
+                                    </option>
+                                  </select>
+                                </div>
+                                <div *ngIf="isAi()" class="form-group">
+                                  <input id="ai" name="ai" type="checkbox" [(ngModel)]="ai_selected">
+                                  <label for="ai">&nbsp;Play against AI</label>
+                                </div>
+                                <div class="form-group">
+                                  <button class="btn btn-primary" (click)="submit()">Launch</button> &nbsp;
+                                  <button *ngIf="viewPresent(1)" class="btn btn-primary" (click)="view(1)">Join</button> &nbsp;
+                                  <button *ngIf="viewPresent(6)" class="btn btn-primary" (click)="view(6)">View</button> &nbsp;
+                                  <button *ngIf="isTourn()" class="btn btn-primary" (click)="tourn()">Tournaments</button> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
